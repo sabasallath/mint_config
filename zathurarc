@@ -1,0 +1,6 @@
+set selection-clipboard clipboard
+set window-title-basename true
+set guioptions sv
+set default-fg "#dcdccc"
+set default-bg "#1f1f1f"
+
