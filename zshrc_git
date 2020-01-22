@@ -1,0 +1,86 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=50000
+SAVEHIST=10000
+
+zstyle :compinstall filename '/home/sallath/.zshrc'
+zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
+autoload -Uz compinit
+compinit
+# --------------------------------------------------
+# PROMPT
+autoload -U promptinit
+promptinit
+
+autoload -U colors && colors
+
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+# RPROMPT=\$vcs_info_msg_0_
+zstyle ':vcs_info:git:*' formats '%F{240}(%b)%f %m%u%c'
+# zstyle ':vcs_info:git:*' formats '%F{240}(%b)%f'
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' check-for-changes true
+
+PROMPT="%B%{$fg[white]%}=%(?.%{$fg[green]%}.%{$fg[red]%})%(?.=.+)%{$fg[white]%}%}= %b%1>>%c%>>%B %(?.%{$fg[green]%}>.%{$fg[red]%}>)%b%{$fg[white]%}%B %{$reset_color%}%b"
+RPROMPT="\$vcs_info_msg_0_ [%B%{$fg[green]%}%30>...>%c%>>%{$reset_color%}%b] %w %T"
+# RPROMPT="[%B%{$fg[green]%}%30>...>%c%>>%{$reset_color%}%b] %w %T"
+# --------------------------------------------------
+# EXPORT
+
+## Cplex path --------------------------------------
+#export LD_LIBRARY_PATH=/opt/ibm/ILOG/CPLEX_Studio128/cplex/bin/x86-64_linux/:$LD_LIBRARY_PATH
+
+## Clojure Leiningen path --------------------------
+#export PATH=$PATH:/home/sallath/bin
+
+# Scripts path -------------------------------------
+export PATH=~/Scripts:$PATH
+export PATH=~/.local/bin:$PATH
+
+## Default -----------------------------------------
+export BROWSER="google-chrome-stable"
+export VISUAL=vim
+export EDITOR="$VISUAL"
+
+# --------------------------------------------------
+# ALIAS
+
+## zshcolors ---------------------------------------
+alias ls='ls --color=auto'
+alias dir='dir --color'
+alias ll='ls --color=auto -l'
+alias la='ls --color=auto -A'
+alias l='ls --color=auto -CF'
+
+## termite color -----------------------------------
+# eval $(dircolors ~/.dircolors)
+
+## Quick make --------------------------------------
+alias getmake='wget -q https://raw.githubusercontent.com/sabasallath/makefiles/master/cpp/Makefile'
+
+# --------------------------------------------------
+# CAPS REPLACEMENT
+
+## Make CapsLock behave like Ctrl ------------------
+# setxkbmap -option ctrl:nocaps
+
+## Make short-pressed Ctrl behave like Escape ------
+# xcape -e 'Control_L=Escape'
+
+# --------------------------------------------------
+# TERMINAL KEYBINDINGS
+
+## Allow extended globing (negation ^) -------------
+setopt extendedglob
+
+## Vim keybindings ---------------------------------
+bindkey -v
+bindkey -M vicmd '^R' history-incremental-pattern-search-backward
+bindkey -M vicmd '?' history-incremental-pattern-search-forward
+bindkey -M viins '^R' history-incremental-pattern-search-backward
+bindkey -M viins '^F' history-incremental-pattern-search-forward
+
+
